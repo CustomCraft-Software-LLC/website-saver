@@ -1,13 +1,14 @@
-import React from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 
 const NavBar = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const theme = useTheme();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: theme.palette.primary.main }}>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
           <Button color="inherit" component={Link} to="/">
@@ -34,3 +35,6 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+
+

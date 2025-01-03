@@ -10,13 +10,16 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <NavBar />
+      {isAuthenticated && <NavBar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <HomePage />} />
+        <Route
+          path="/dashboard"
+          element={isAuthenticated ? <DashboardPage /> : <HomePage />}
+        />
       </Routes>
     </React.Fragment>
   );
-}
+};
 
 export default App;
