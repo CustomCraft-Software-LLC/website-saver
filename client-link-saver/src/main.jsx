@@ -6,8 +6,8 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import App from './App.jsx';
 import theme from './assets/theme';
 
-const domain = 'auth0-domain';
-const clientId = 'auth0-client-id';
+const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
