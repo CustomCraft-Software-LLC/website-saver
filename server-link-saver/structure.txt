@@ -1,0 +1,18 @@
+.
+├── controllers
+│   └── linkController.js
+├── index.js
+├── middleware
+│   └── authMiddleware.js
+├── models
+│   └── Link.js
+├── package.json
+├── package-lock.json
+├── README.md
+├── routes
+│   └── linkRoutes.js
+├── structure.txt
+└── utils
+    └── validateData.js
+
+5 directories, 10 files
