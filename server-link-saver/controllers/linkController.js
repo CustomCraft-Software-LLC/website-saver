@@ -23,16 +23,13 @@ const deleteLinks = async (req, res) => {
   try {
     const { id } = req.body;
     const result = await db.Link.destroy({
-      where: {
-        id: id,
-        userId: req.user.sub
-      }
+      where: { id, userId: req.user.sub }
     });
 
     if (result === 0) {
       return res.status(404).json({ message: 'Link not found or unauthorized' });
     }
-    
+
     res.status(200).json({ message: 'Link deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error deleting link' });
@@ -48,7 +45,7 @@ const updateLink = async (req, res) => {
     );
 
     if (updated) {
-      const updatedLink = await Link.findOne({ where: { id, userId: req.user.sub } });
+      const updatedLink = await db.Link.findOne({ where: { id, userId: req.user.sub } });
       return res.status(200).json(updatedLink);
     }
 
@@ -58,4 +55,4 @@ const updateLink = async (req, res) => {
   }
 };
 
-module.exports = { getLinks, updateLink, deleteLinks, createLink };
+module.exports = { getLinks, createLink, deleteLinks, updateLink };
