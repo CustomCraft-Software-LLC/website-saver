@@ -1,11 +1,11 @@
 const express = require('express');
-const { checkJWT } = require('../middleware/authMiddleware');
+const { checkJWT } = require('../middleware/authMiddleware.js');
 const {
   getLinks,
   createLink,
   deleteLinks,
   updateLink,
-} = require('../controllers/linkController');
+} = require('../controllers/linkController.js');
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.post('/', checkJWT, createLink);
 router.delete('/', checkJWT, deleteLinks);
 router.put('/', checkJWT, updateLink);
 
-module.exports = router;
+module.exports = { router };
