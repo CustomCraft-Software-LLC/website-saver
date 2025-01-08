@@ -14,4 +14,4 @@ router.post('/', checkJWT, createLink);
 router.delete('/', checkJWT, deleteLinks);
 router.put('/', checkJWT, updateLink);
 
-module.exports = { router };
+module.exports = router;
