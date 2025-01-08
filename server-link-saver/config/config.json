@@ -1,14 +1,20 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres"
+    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
-    "use_env_variable": "DATABASE_URL",
+    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
     "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
+    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {

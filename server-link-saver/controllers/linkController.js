@@ -1,8 +1,8 @@
-const { Link } = require('../models');
+const { db } = require('../models');
 
 const getLinks = async (req, res) => {
   try {
-    const links = await Link.findAll({ where: { userId: req.user.sub } });
+    const links = await db.Link.findAll({ where: { userId: req.user.sub } });
     res.json(links);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching links' });

@@ -1,18 +1,24 @@
 .
+├── config
+│   └── config.json
 ├── controllers
 │   └── linkController.js
 ├── index.js
 ├── middleware
 │   └── authMiddleware.js
+├── migrations
+│   └── 20250104215046-create-links.js
 ├── models
+│   ├── index.js
 │   └── Link.js
 ├── package.json
 ├── package-lock.json
 ├── README.md
 ├── routes
-│   └── linkRoutes.js
+│   └── index.js
+├── seeders
 ├── structure.txt
 └── utils
     └── validateData.js
 
-5 directories, 10 files
+8 directories, 13 files
