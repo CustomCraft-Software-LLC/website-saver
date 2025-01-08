@@ -6,12 +6,11 @@ const {
   deleteLinks,
   updateLink,
 } = require('../controllers/linkController');
-const { validateLinkData } = require('../middleware/validateData');
 
 const router = express.Router();
 
 router.get('/', checkJWT, getLinks);
-router.post('/', checkJWT, validateLinkData, createLink);
+router.post('/', checkJWT, createLink);
 router.delete('/', checkJWT, deleteLinks);
 router.put('/', checkJWT, updateLink);
 
