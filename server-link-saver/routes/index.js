@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const { checkJWT } = require('../middleware/authMiddleware.js');
 const {
   getLinks,
@@ -6,8 +7,6 @@ const {
   deleteLinks,
   updateLink,
 } = require('../controllers/linkController.js');
-
-const router = express.Router();
 
 router.get('/', checkJWT, getLinks);
 router.post('/', checkJWT, createLink);

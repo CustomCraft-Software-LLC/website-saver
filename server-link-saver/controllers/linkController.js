@@ -12,7 +12,7 @@ const getLinks = async (req, res) => {
 const createLink = async (req, res) => {
   try {
     const { title, url } = req.body;
-    const link = await Link.create({ title, url, userId: req.user.sub });
+    const link = await db.Link.create({ title, url, userId: req.user.sub });
     res.status(201).json(link);
   } catch (error) {
     res.status(400).json({ error: 'Error creating link' });
@@ -22,7 +22,7 @@ const createLink = async (req, res) => {
 const deleteLinks = async (req, res) => {
   try {
     const { id } = req.body;
-    const result = await Link.destroy({
+    const result = await db.Link.destroy({
       where: {
         id: id,
         userId: req.user.sub
@@ -42,7 +42,7 @@ const deleteLinks = async (req, res) => {
 const updateLink = async (req, res) => {
   try {
     const { id, title, url } = req.body;
-    const [updated] = await Link.update(
+    const [updated] = await db.Link.update(
       { title, url },
       { where: { id, userId: req.user.sub } }
     );
