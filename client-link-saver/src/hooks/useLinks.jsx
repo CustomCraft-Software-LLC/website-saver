@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchLinks, createLink } from '../api/links';
+import { fetchLinks, createLink } from '../utils/links';
 
 const useLinks = (getAccessTokenSilently, isAuthenticated) => {
   const [links, setLinks] = useState([]);
