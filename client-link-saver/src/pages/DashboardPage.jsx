@@ -11,9 +11,9 @@ const DashboardPage = () => {
   const { open, openDialog, closeDialog } = useDialogState();
 
   return (
-    <Container maxWidth="md" component="main">
+    <Container maxWidth="md">
       <Box mt={5}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Welcome, {user?.email || 'User'}
         </Typography>
         <Typography variant="body1" gutterBottom>
