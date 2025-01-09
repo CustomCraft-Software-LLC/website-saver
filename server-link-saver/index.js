@@ -9,8 +9,8 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ['https://website-saver.onrender.com', 'http://localhost:5000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: ['https://website-saver.onrender.com', 'http://localhost:5000', 'http://localhost:5173'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
