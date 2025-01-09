@@ -14,7 +14,7 @@ const DashboardPage = () => {
     if (isAuthenticated) {
       const fetchLinks = async () => {
         const token = await getAccessTokenSilently();
-        const { data } = await axios.get('http://localhost:5000/links', {
+        const { data } = await axios.get('https://website-saver.onrender.com/api/links', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLinks(data);
@@ -27,7 +27,7 @@ const DashboardPage = () => {
     if (newLink.title && newLink.url) {
       const token = await getAccessTokenSilently();
       const { data } = await axios.post(
-        'http://localhost:5000/links',
+        'https://website-saver.onrender.com/api/links',
         newLink,
         { headers: { Authorization: `Bearer ${token}` } }
       );
