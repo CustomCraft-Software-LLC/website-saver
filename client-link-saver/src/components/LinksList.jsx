@@ -1,12 +1,16 @@
-import { List, ListItem, ListItemText } from '@mui/material';
+import React from 'react';
+import { List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const LinksList = ({ links }) => {
   return (
     <List>
       {links.map((link) => (
-        <ListItem key={link._id} divider>
-          <ListItemText primary={link.title} secondary={link.url} />
-        </ListItem>
+        <React.Fragment key={link.id}>
+          <ListItem>
+            <ListItemText primary={link.title} secondary={link.url} />
+          </ListItem>
+          <Divider />
+        </React.Fragment>
       ))}
     </List>
   );

@@ -6,6 +6,9 @@ const sendResponse = (res, status, data, error = null) => {
 
 const getLinks = async (req, res) => {
   const userId = req.user?.sub;
+
+  console.log(req);
+
   if (!userId) {
     return sendResponse(res, 401, null, 'Unauthorized');
   }
@@ -22,6 +25,8 @@ const getLinks = async (req, res) => {
 const createLink = async (req, res) => {
   const userId = req.user?.sub;
   const { title, url } = req.body;
+
+  console.log(req);
 
   if (!userId) {
     return sendResponse(res, 401, null, 'Unauthorized');

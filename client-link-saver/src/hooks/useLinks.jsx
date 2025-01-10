@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { fetchLinks, addLink as addLinkService } from '../services/linksService';
 
 const useLinks = (getAccessTokenSilently, isAuthenticated) => {
@@ -6,36 +6,43 @@ const useLinks = (getAccessTokenSilently, isAuthenticated) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      const loadLinks = async () => {
-        setLoading(true);
-        try {
-          const token = await getAccessTokenSilently();
-          const data = await fetchLinks(token);
-          setLinks(data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+  const loadLinks = useCallback(async () => {
+    if (!isAuthenticated) return;
 
-      loadLinks();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const token = await getAccessTokenSilently();
+      const data = await fetchLinks(token);
+      setLinks(data);
+    } catch (err) {
+      setError(err.response?.data?.error || err.message);
+    } finally {
+      setLoading(false);
     }
   }, [getAccessTokenSilently, isAuthenticated]);
 
-  const addLink = async (linkData) => {
-    try {
-      const token = await getAccessTokenSilently();
-      const newLink = await addLinkService(token, linkData);
-      setLinks((prevLinks) => [...prevLinks, newLink]);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const addLink = useCallback(
+    async (linkData) => {
+      setError(null);
 
-  return { links, loading, error, addLink };
+      try {
+        const token = await getAccessTokenSilently();
+        const newLink = await addLinkService(token, linkData);
+        setLinks((prevLinks) => [...prevLinks, newLink]);
+      } catch (err) {
+        setError(err.response?.data?.error || err.message);
+      }
+    },
+    [getAccessTokenSilently]
+  );
+
+  useEffect(() => {
+    loadLinks();
+  }, [loadLinks]);
+
+  return { links, loading, error, addLink, loadLinks };
 };
 
 export default useLinks;

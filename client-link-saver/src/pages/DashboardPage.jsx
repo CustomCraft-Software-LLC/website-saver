@@ -1,4 +1,4 @@
-import { Typography, Container, Box, Button } from '@mui/material';
+import { Typography, Container, Box, Button, CircularProgress, Alert } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
 import useLinks from '../hooks/useLinks';
 import useDialogState from '../hooks/useDialogState';
@@ -10,6 +10,21 @@ const DashboardPage = () => {
   const { links, addLink, loading, error } = useLinks(getAccessTokenSilently, isAuthenticated);
   const { open, openDialog, closeDialog } = useDialogState();
 
+  const renderLoading = () => (
+    <Box mt={3} textAlign="center">
+      <CircularProgress />
+      <Typography variant="body2" mt={2}>
+        Loading your links...
+      </Typography>
+    </Box>
+  );
+
+  const renderError = () => (
+    <Box mt={3}>
+      <Alert severity="error">{error}</Alert>
+    </Box>
+  );
+
   return (
     <Container maxWidth="md">
       <Box mt={5}>
@@ -20,14 +35,14 @@ const DashboardPage = () => {
           Manage your saved links below.
         </Typography>
 
-        {loading && <Typography>Loading...</Typography>}
-        {error && <Typography color="error">{error}</Typography>}
+        {loading && renderLoading()}
+        {error && renderError()}
 
-        <LinksList links={links} />
+        {!loading && !error && <LinksList links={links} />}
 
         <Box mt={3}>
-          <Button variant="contained" onClick={openDialog}>
-            Add Link
+          <Button variant="contained" color="primary" onClick={openDialog}>
+            Add New Link
           </Button>
         </Box>
       </Box>
