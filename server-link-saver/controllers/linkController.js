@@ -12,6 +12,7 @@ const getLinks = async (req, res) => {
 
   try {
     const links = await db.Link.findAll({ where: { userId } });
+    console.log(`getLinks: ${links}`);
     sendResponse(res, 200, links);
   } catch (error) {
     sendResponse(res, 500, null, 'Failed to fetch links');
@@ -32,6 +33,7 @@ const createLink = async (req, res) => {
 
   try {
     const link = await db.Link.create({ title, url, userId });
+    console.log(`createLink: ${link}`);
     sendResponse(res, 201, link);
   } catch (error) {
     sendResponse(res, 500, null, 'Failed to create link');
