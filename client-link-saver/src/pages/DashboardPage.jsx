@@ -19,20 +19,20 @@ const DashboardPage = () => {
         <Typography variant="body1" gutterBottom>
           Manage your saved links below.
         </Typography>
+
         {loading && <Typography>Loading...</Typography>}
         {error && <Typography color="error">{error}</Typography>}
+
         <LinksList links={links} />
+
         <Box mt={3}>
           <Button variant="contained" onClick={openDialog}>
             Add Link
           </Button>
         </Box>
       </Box>
-      <AddLinkDialog
-        open={open}
-        onClose={closeDialog}
-        onAddLink={addLink}
-      />
+
+      <AddLinkDialog open={open} onClose={closeDialog} onAddLink={addLink} />
     </Container>
   );
 };
