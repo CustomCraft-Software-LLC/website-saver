@@ -38,6 +38,7 @@ const createLink = async (req, res) => {
   }
 };
 
+/*
 const deleteLinks = async (req, res) => {
   const userId = req.user?.sub;
   const { id } = req.body;
@@ -90,5 +91,6 @@ const updateLink = async (req, res) => {
     sendResponse(res, 500, null, 'Failed to update link');
   }
 };
+*/
 
-module.exports = { getLinks, createLink, deleteLinks, updateLink };
+module.exports = { getLinks, createLink };
