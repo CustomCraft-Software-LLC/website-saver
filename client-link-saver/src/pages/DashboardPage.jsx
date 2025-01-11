@@ -1,13 +1,11 @@
 import { Typography, Container, Box, Button, CircularProgress, Alert } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
-import useLinks from '../hooks/useLinks';
 import useDialogState from '../hooks/useDialogState';
 import LinksList from '../components/LinksList';
 import AddLinkDialog from '../components/AddLinkDialog';
 
 const DashboardPage = () => {
-  const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
-  const { links, addLink, loading, error } = useLinks(getAccessTokenSilently, isAuthenticated);
+  const { user } = useAuth0();
   const { open, openDialog, closeDialog } = useDialogState();
 
   const renderLoading = () => (
