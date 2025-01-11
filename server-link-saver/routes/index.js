@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { checkJwt } = require('../middleware/authMiddleware.js');
 const linkController = require('../controllers/linkController.js');
+const linkControllerList = require('../controllers/linkControllerList.js');
 
 router.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
@@ -12,8 +13,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/links', checkJwt, linkController.getLinks);
-router.post('/links', checkJwt, linkController.createLink);
+router.get('/links', checkJwt, linkControllerList.getLinks);
+router.post('/links', checkJwt, linkControllerList.createLink);
 /*
 router.delete('/links', checkJwt, linkController.deleteLinks);
 router.put('/links', checkJwt, linkController.updateLink);
