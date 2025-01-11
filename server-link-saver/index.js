@@ -1,25 +1,21 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const linkRoutes = require('./routes/index.js');
+const linkRoutes = require('./routes/index.js'); 
 
-dotenv.config();
+dotenv.config(); 
 
 const app = express();
 
 const corsOptions = {
   origin: ['http://localhost:5173'], 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 
-
-
-
-app.use(cors(corsOptions));
-
-app.use(bodyParser.json());
+app.use(cors(corsOptions)); 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
 app.use('/api', linkRoutes);
 
