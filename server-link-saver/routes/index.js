@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { checkJwt } = require('../middleware/authMiddleware.js');
 const linkController = require('../controllers/linkController.js');
-const linkControllerList = require('../controllers/linkControllerList.js');
 
 router.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
