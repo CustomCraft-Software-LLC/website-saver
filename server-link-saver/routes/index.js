@@ -5,6 +5,7 @@ const linkController = require('../controllers/linkController.js');
 
 router.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    console.log('Decoded JWT:', req.user);
     console.log('Headers:', req.headers);
     console.log('Query:', req.query);
     console.log('Body:', req.body);
