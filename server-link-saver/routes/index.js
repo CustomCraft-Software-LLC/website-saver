@@ -4,7 +4,10 @@ const { checkJwt } = require('../middleware/authMiddleware.js');
 const linkController = require('../controllers/linkController.js');
 
 router.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl} ${req.body}`);
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    console.log('Headers:', req.headers);
+    console.log('Query:', req.query);
+    console.log('Body:', req.body);
     next();
 });
 
