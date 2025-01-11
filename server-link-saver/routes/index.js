@@ -13,8 +13,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/links', checkJwt, linkControllerList.getLinks);
-router.post('/links', checkJwt, linkControllerList.createLink);
+router.get('/links', checkJwt, linkController.getLinks);
+router.post('/links', checkJwt, linkController.createLink);
 /*
 router.delete('/links', checkJwt, linkController.deleteLinks);
 router.put('/links', checkJwt, linkController.updateLink);
