@@ -7,7 +7,7 @@ const sendResponse = (res, status, data, error = null) => {
 
 const getLinks = async (req, res) => {
   console.log('[getLinks] Request received');
-  const userId = req.auth?.sub.split('|')[1];
+  const userId = req.auth?.sub
 
   console.log('[getLinks] Decoded JWT:', req.auth);
 
@@ -29,7 +29,7 @@ const getLinks = async (req, res) => {
 
 const createLink = async (req, res) => {
   console.log('[createLink] Request received');
-  const userId = req.auth?.sub.split('|')[1];
+  const userId = req.auth?.sub
   const { title, url } = req.body;
 
   console.log('[createLink] Decoded JWT:', req.auth);

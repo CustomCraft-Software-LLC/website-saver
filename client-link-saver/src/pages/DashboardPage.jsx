@@ -1,14 +1,55 @@
-import { Typography, Container, Box, Button, CircularProgress, Alert } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Typography, Container, Box, Button, CircularProgress, Alert, TextField } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
-import useLinks from '../hooks/useLinks';
-import useDialogState from '../hooks/useDialogState';
+import { fetchLinks, addLink } from '../services/linksService';
 import LinksList from '../components/LinksList';
-import AddLinkDialog from '../components/AddLinkDialog';
 
 const DashboardPage = () => {
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
-  const { links, addLink, loading, error } = useLinks(getAccessTokenSilently, isAuthenticated);
-  const { open, openDialog, closeDialog } = useDialogState();
+  const [links, setLinks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [linkData, setLinkData] = useState({ title: '', url: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const loadLinks = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const token = await getAccessTokenSilently();
+          const fetchedLinks = await fetchLinks(token);
+          setLinks(fetchedLinks);
+        } catch (error) {
+          setError('Failed to load links');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadLinks();
+    }
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  const handleAddLink = async () => {
+    if (!linkData.title || !linkData.url) {
+      setError('Please provide a title and a URL');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const token = await getAccessTokenSilently();
+      const newLink = await addLink(token, linkData);
+      setLinks((prevLinks) => [...prevLinks, newLink]);
+      setLinkData({ title: '', url: '' });
+    } catch (error) {
+      setError('Failed to add link');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const renderLoading = () => (
     <Box mt={3} textAlign="center">
@@ -41,13 +82,34 @@ const DashboardPage = () => {
         {!loading && !error && <LinksList links={links} />}
 
         <Box mt={3}>
-          <Button variant="contained" color="primary" onClick={openDialog}>
-            Add New Link
-          </Button>
+          <TextField
+            label="Title"
+            variant="outlined"
+            fullWidth
+            value={linkData.title}
+            onChange={(e) => setLinkData({ ...linkData, title: e.target.value })}
+            margin="normal"
+          />
+          <TextField
+            label="URL"
+            variant="outlined"
+            fullWidth
+            value={linkData.url}
+            onChange={(e) => setLinkData({ ...linkData, url: e.target.value })}
+            margin="normal"
+          />
+          <Box mt={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddLink}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Adding...' : 'Add New Link'}
+            </Button>
+          </Box>
         </Box>
       </Box>
-
-      <AddLinkDialog open={open} onClose={closeDialog} onAddLink={addLink} />
     </Container>
   );
 };
