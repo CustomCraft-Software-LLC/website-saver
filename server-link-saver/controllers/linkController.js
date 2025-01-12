@@ -7,7 +7,19 @@ const sendResponse = (res, status, data, error = null) => {
 
 const getLinks = async (req, res) => {
   console.log('[getLinks] Request received');
-  const userId = req.auth?.sub
+  
+  let userId = null;
+  
+  if (req.auth?.sub) {
+    const subParts = req.auth.sub.split('|');
+    if (subParts.length > 1) {
+      userId = subParts[1];
+    } else {
+      console.warn('[getLinks] Invalid sub format: Missing userId');
+    }
+  } else {
+    console.warn('[getLinks] Missing sub field in JWT');
+  }
 
   console.log('[getLinks] Decoded JWT:', req.auth);
 
@@ -29,7 +41,20 @@ const getLinks = async (req, res) => {
 
 const createLink = async (req, res) => {
   console.log('[createLink] Request received');
-  const userId = req.auth?.sub
+  
+  let userId = null;
+
+  if (req.auth?.sub) {
+    const subParts = req.auth.sub.split('|');
+    if (subParts.length > 1) {
+      userId = subParts[1];
+    } else {
+      console.warn('[createLink] Invalid sub format: Missing userId');
+    }
+  } else {
+    console.warn('[createLink] Missing sub field in JWT');
+  }
+
   const { title, url } = req.body;
 
   console.log('[createLink] Decoded JWT:', req.auth);
