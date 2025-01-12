@@ -9,9 +9,9 @@ const getLinks = async (req, res) => {
   console.log('[getLinks] Request received');
   
   let userId = null;
-  
-  if (req.auth?.sub) {
-    const subParts = req.auth.sub.split('|');
+
+  if (req.auth?.payload?.sub) {
+    const subParts = req.auth.payload.sub.split('|');
     if (subParts.length > 1) {
       userId = subParts[1];
     } else {
@@ -21,31 +21,23 @@ const getLinks = async (req, res) => {
     console.warn('[getLinks] Missing sub field in JWT');
   }
 
-  console.log('[getLinks] Decoded JWT:', req.auth?.payload.sub);
-
   if (!userId) {
-    console.warn('[getLinks] Unauthorized request: Missing userId in JWT');
     return sendResponse(res, 401, null, 'Unauthorized');
   }
 
   try {
-    console.log('[getLinks] Fetching links for userId:', userId);
     const links = await db.Link.findAll({ where: { userId } });
-    console.log(`[getLinks] Found ${links.length} links for userId: ${userId}`);
     sendResponse(res, 200, links);
   } catch (error) {
-    console.error('[getLinks] Error fetching links:', error.message);
     sendResponse(res, 500, null, 'Failed to fetch links');
   }
 };
 
 const createLink = async (req, res) => {
-  console.log('[createLink] Request received');
-  
   let userId = null;
 
-  if (req.auth?.sub) {
-    const subParts = req.auth.sub.split('|');
+  if (req.auth?.payload?.sub) {
+    const subParts = req.auth.payload.sub.split('|');
     if (subParts.length > 1) {
       userId = subParts[1];
     } else {
@@ -57,26 +49,18 @@ const createLink = async (req, res) => {
 
   const { title, url } = req.body;
 
-  console.log('[createLink] Decoded JWT:', req.auth);
-  console.log('[createLink] Request body:', req.body);
-
   if (!userId) {
-    console.warn('[createLink] Unauthorized request: Missing userId in JWT');
     return sendResponse(res, 401, null, 'Unauthorized');
   }
 
   if (!title || !url) {
-    console.warn('[createLink] Invalid request: Missing title or URL');
     return sendResponse(res, 400, null, 'Title and URL are required');
   }
 
   try {
-    console.log('[createLink] Creating new link for userId:', userId);
     const link = await db.Link.create({ title, url, userId });
-    console.log(`[createLink] Link created: ${JSON.stringify(link)}`);
     sendResponse(res, 201, link);
   } catch (error) {
-    console.error('[createLink] Error creating link:', error.message);
     sendResponse(res, 500, null, 'Failed to create link');
   }
 };
