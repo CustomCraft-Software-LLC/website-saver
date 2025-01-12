@@ -26,6 +26,7 @@ const getLinks = async (req, res) => {
   }
 
   try {
+    console.log('[getLinks] userId: ' + userId);
     const links = await db.Link.findAll({ where: { userId } });
     sendResponse(res, 200, links);
   } catch (error) {
