@@ -21,7 +21,7 @@ const getLinks = async (req, res) => {
     console.warn('[getLinks] Missing sub field in JWT');
   }
 
-  console.log('[getLinks] Decoded JWT:', req.auth?.sub);
+  console.log('[getLinks] Decoded JWT:', req.auth?.payload.sub);
 
   if (!userId) {
     console.warn('[getLinks] Unauthorized request: Missing userId in JWT');
