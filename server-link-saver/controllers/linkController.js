@@ -1,46 +1,57 @@
 const { db } = require('../models');
 
 const sendResponse = (res, status, data, error = null) => {
+  console.log(`[sendResponse] Status: ${status}, Data: ${data ? JSON.stringify(data) : 'None'}, Error: ${error}`);
   res.status(status).json(error ? { error } : data);
 };
 
 const getLinks = async (req, res) => {
-  const userId = req.user?.sub;
+  console.log('[getLinks] Request received');
+  const userId = req.auth?.sub;
 
-  console.log('req:', req.user?.sub);
+  console.log('[getLinks] Decoded JWT:', req.auth);
 
   if (!userId) {
+    console.warn('[getLinks] Unauthorized request: Missing userId in JWT');
     return sendResponse(res, 401, null, 'Unauthorized');
   }
 
   try {
+    console.log('[getLinks] Fetching links for userId:', userId);
     const links = await db.Link.findAll({ where: { userId } });
-    console.log(`getLinks: ${links}`);
+    console.log(`[getLinks] Found ${links.length} links for userId: ${userId}`);
     sendResponse(res, 200, links);
   } catch (error) {
+    console.error('[getLinks] Error fetching links:', error.message);
     sendResponse(res, 500, null, 'Failed to fetch links');
   }
 };
 
 const createLink = async (req, res) => {
-  const userId = req.user?.sub;
+  console.log('[createLink] Request received');
+  const userId = req.auth?.sub;
   const { title, url } = req.body;
 
-  console.log('req:', req.user?.sub);
+  console.log('[createLink] Decoded JWT:', req.auth);
+  console.log('[createLink] Request body:', req.body);
 
   if (!userId) {
+    console.warn('[createLink] Unauthorized request: Missing userId in JWT');
     return sendResponse(res, 401, null, 'Unauthorized');
   }
 
   if (!title || !url) {
+    console.warn('[createLink] Invalid request: Missing title or URL');
     return sendResponse(res, 400, null, 'Title and URL are required');
   }
 
   try {
+    console.log('[createLink] Creating new link for userId:', userId);
     const link = await db.Link.create({ title, url, userId });
-    console.log(`createLink: ${link}`);
+    console.log(`[createLink] Link created: ${JSON.stringify(link)}`);
     sendResponse(res, 201, link);
   } catch (error) {
+    console.error('[createLink] Error creating link:', error.message);
     sendResponse(res, 500, null, 'Failed to create link');
   }
 };

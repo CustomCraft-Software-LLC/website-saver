@@ -7,4 +7,14 @@ const checkJwt = auth({
   tokenSigningAlg: 'RS256'
 });
 
-module.exports = { checkJwt };
+const logDecodedJwt = (req, res, next) => {
+  if (req.auth) {
+    console.log('Decoded JWT:', req.auth);
+  } else {
+    console.log('No JWT decoded in request.');
+  }
+
+  next();
+};
+
+module.exports = { checkJwt, logDecodedJwt };
