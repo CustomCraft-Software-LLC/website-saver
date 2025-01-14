@@ -2,7 +2,16 @@ const { Sequelize, DataTypes } = require('sequelize');
 const LinkModel = require('../models/Link');
 const config = require('../config/config.json')['test'];
 
-const sequelize = new Sequelize(config.url, { dialect: config.dialect, logging: false });
+const sequelize = new Sequelize(config.url, {
+  dialect: config.dialect,
+  logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  }
+});
 
 const testLink = async () => {
   try {
@@ -33,6 +42,7 @@ const testLink = async () => {
   } finally {
     await sequelize.close();
   }
-}
+};
 
 testLink();
+
