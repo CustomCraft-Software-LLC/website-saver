@@ -1,4 +1,4 @@
-const { db } = require('../models');
+const { Link } = require('../models/Link');
 
 const sendResponse = (res, status, data, error = null) => {
   console.log(`[sendResponse] Status: ${status}, Data: ${data ? JSON.stringify(data) : 'None'}, Error: ${error}`);
@@ -27,7 +27,7 @@ const getLinks = async (req, res) => {
 
   try {
     console.log('[getLinks] userId: ' + userId);
-    const links = await db.Link.findAll({ where: { userId } });
+    const links = await Link.findAll({ where: { userId } });
     sendResponse(res, 200, links);
   } catch (error) {
     sendResponse(res, 500, null, 'Failed to fetch links');
@@ -59,7 +59,7 @@ const createLink = async (req, res) => {
   }
 
   try {
-    const link = await db.Link.create({ title, url, userId });
+    const link = await Link.create({ title, url, userId });
     sendResponse(res, 201, link);
   } catch (error) {
     sendResponse(res, 500, null, 'Failed to create link');
@@ -80,7 +80,7 @@ const deleteLinks = async (req, res) => {
   }
 
   try {
-    const result = await db.Link.destroy({ where: { id, userId } });
+    const result = await .Link.destroy({ where: { id, userId } });
     if (result) {
       sendResponse(res, 200, { message: 'Link deleted successfully' });
     } else {
@@ -104,13 +104,13 @@ const updateLink = async (req, res) => {
   }
 
   try {
-    const [updated] = await db.Link.update(
+    const [updated] = await .Link.update(
       { title, url },
       { where: { id, userId } }
     );
 
     if (updated) {
-      const updatedLink = await db.Link.findOne({ where: { id, userId } });
+      const updatedLink = await .Link.findOne({ where: { id, userId } });
       sendResponse(res, 200, updatedLink);
     } else {
       sendResponse(res, 404, null, 'Link not found');
