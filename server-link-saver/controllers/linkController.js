@@ -1,7 +1,6 @@
 const { Link } = require('../models');
 
 const sendResponse = (res, status, data, error = null) => {
-  console.log(`[sendResponse] Status: ${status}, Data: ${data ? JSON.stringify(data) : 'None'}, Error: ${error}`);
   res.status(status).json(error ? { error } : data);
 };
 

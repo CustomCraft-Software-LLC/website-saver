@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const LinkModel = require('./Link');
 const config = require('../config/config.json')['development'];
 
 const sequelize = new Sequelize(config.url, {
@@ -9,6 +8,6 @@ const sequelize = new Sequelize(config.url, {
 
 const db = {};
 db.sequelize = sequelize;
-db.Link = LinkModel(sequelize, DataTypes);
+db.Link = require('./Link')(sequelize, DataTypes);
 
 module.exports = db;
