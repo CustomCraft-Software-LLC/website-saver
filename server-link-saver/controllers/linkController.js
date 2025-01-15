@@ -50,9 +50,8 @@ const createLink = async (req, res) => {
   }
 };
 
-/*
-const deleteLinks = async (req, res) => {
-  const userId = req.user?.sub;
+const deleteLink = async (req, res) => {
+  let userId = extractUserId(req);
   const { id } = req.body;
 
   if (!userId) {
@@ -64,7 +63,7 @@ const deleteLinks = async (req, res) => {
   }
 
   try {
-    const result = await .Link.destroy({ where: { id, userId } });
+    const result = await Link.destroy({ where: { id, userId } });
     if (result) {
       sendResponse(res, 200, { message: 'Link deleted successfully' });
     } else {
@@ -76,7 +75,7 @@ const deleteLinks = async (req, res) => {
 };
 
 const updateLink = async (req, res) => {
-  const userId = req.user?.sub;
+  let userId = extractUserId(req);
   const { id, title, url } = req.body;
 
   if (!userId) {
@@ -88,13 +87,10 @@ const updateLink = async (req, res) => {
   }
 
   try {
-    const [updated] = await .Link.update(
-      { title, url },
-      { where: { id, userId } }
-    );
+    const [updated] = await Link.update({ title, url }, { where: { id, userId } });
 
     if (updated) {
-      const updatedLink = await .Link.findOne({ where: { id, userId } });
+      const updatedLink = await Link.findOne({ where: { id, userId } });
       sendResponse(res, 200, updatedLink);
     } else {
       sendResponse(res, 404, null, 'Link not found');
@@ -103,6 +99,5 @@ const updateLink = async (req, res) => {
     sendResponse(res, 500, null, 'Failed to update link');
   }
 };
-*/
 
-module.exports = { getLinks, createLink };
+module.exports = { getLinks, createLink, deleteLink, updateLink };
