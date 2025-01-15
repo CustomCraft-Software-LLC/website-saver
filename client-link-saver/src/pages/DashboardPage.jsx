@@ -4,8 +4,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { fetchLinks, addLink } from '../services/linksService';
 import LinksList from '../components/LinksList';
 
-
-
 const DashboardPage = () => {
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [links, setLinks] = useState([]);
