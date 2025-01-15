@@ -4,6 +4,12 @@ const config = require('../config/config.json')['development'];
 const sequelize = new Sequelize(config.url, {
   dialect: config.dialect,
   logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true, 
+      rejectUnauthorized: false
+    },
+  },
 });
 
 const db = {};
