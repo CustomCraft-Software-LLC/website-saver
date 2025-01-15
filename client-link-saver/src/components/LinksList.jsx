@@ -11,24 +11,13 @@ const LinksList = ({ links }) => {
         <React.Fragment key={link.id}>
           <ListItem>
             <ListItemText 
-              primary={`${link.title}`} 
-              secondary={`${link.url}`} 
-              sx={{ 
-                fontWeight: 'bold', 
-                color: theme.palette.text.primary, 
-                '& .MuiListItemText-primary': { 
-                  fontWeight: 'bold', 
-                  color: theme.palette.text.primary
-                },
-                '& .MuiListItemText-secondary': { 
-                  color: theme.palette.text.secondary 
-                }
-              }} 
+              primary={`Title: ${link.title}`} 
+              secondary={`Url: ${link.url}`} 
             />
-            <Button variant="outlined" color="primary" onClick={() => alert('Edit functionality here')}>
+            <Button variant="outlined" color="primary">
               Edit
             </Button>
-            <Button variant="outlined" color="secondary" onClick={() => alert('Delete functionality here')}>
+            <Button variant="outlined" color="secondary">
               Delete
             </Button>
           </ListItem>
