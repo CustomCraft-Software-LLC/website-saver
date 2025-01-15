@@ -97,9 +97,9 @@ const updateLink = async (req, res) => {
   }
 
   try {
-    const [updated] = await Link.update({ title, url }, { where: { id, userId } });
+    const result = await Link.update({ title, url }, { where: { id, userId } });
 
-    if (updated) {
+    if (result) {
       const updatedLink = await Link.findOne({ where: { id, userId } });
       console.log(`[updateLink] [INFO] UserId: ${userId} - Link updated successfully. LinkId: ${id} - New Title: ${updatedLink.title}`);
       sendResponse(res, 200, updatedLink);
