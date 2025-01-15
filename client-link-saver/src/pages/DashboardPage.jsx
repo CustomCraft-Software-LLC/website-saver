@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Typography, Container, Box, Button, CircularProgress, Alert, TextField } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
-import { fetchLinks, addLink } from '../services/linksService';
+import { fetchLinks, addLink, updateLink, deleteLink } from '../services/linksService';
 import LinksList from '../components/LinksList';
 
 const DashboardPage = () => {
@@ -51,6 +51,34 @@ const DashboardPage = () => {
     }
   };
 
+  const handleDeleteLink = async (linkId) => {
+    setLoading(true);
+    try {
+      const token = await getAccessTokenSilently();
+      await deleteLink(token, linkId);
+      setLinks((prevLinks) => prevLinks.filter((link) => link.id !== linkId));
+    } catch (error) {
+      setError('Failed to delete link');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateLink = async (linkId, updatedData) => {
+    setLoading(true);
+    try {
+      const token = await getAccessTokenSilently();
+      const updatedLink = await updateLink(token, linkId, updatedData);
+      setLinks((prevLinks) =>
+        prevLinks.map((link) => (link.id === linkId ? updatedLink : link))
+      );
+    } catch (error) {
+      setError('Failed to update link');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderLoading = () => (
     <Box mt={3} textAlign="center">
       <CircularProgress />
@@ -79,7 +107,13 @@ const DashboardPage = () => {
         {loading && renderLoading()}
         {error && renderError()}
 
-        {!loading && !error && <LinksList links={links} />}
+        {!loading && !error && (
+          <LinksList
+            links={links}
+            onDelete={handleDeleteLink}
+            onUpdate={handleUpdateLink}
+          />
+        )}
 
         <Box mt={3}>
           <TextField
