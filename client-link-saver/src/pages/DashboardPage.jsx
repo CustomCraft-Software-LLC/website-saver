@@ -76,7 +76,7 @@ const DashboardPage = () => {
   return (
     <Container>
       <Box mt={5}>
-        <Typography variant="h6" gutterBottom>Welcome, {user?.email || 'User'}</Typography>
+        <Typography variant="h6" gutterBottom>Welcome, {user?.name || 'User'}</Typography>
         <Typography variant="body1" gutterBottom>Manage your saved links below.</Typography>
 
         {loading && <CircularProgress />}
