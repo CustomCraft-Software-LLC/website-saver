@@ -1,23 +1,50 @@
-import { Typography, Box, useTheme } from '@mui/material';
+import { Typography, Box, Card, CardMedia, Button } from '@mui/material';
 
 const HomeLoggedIn = ({ user }) => {
-  const theme = useTheme(); 
+  const randomImageUrl = `https://picsum.photos/600/400`;
+
   return (
-    <Box component="div">
+    <Box 
+      sx={{ 
+        textAlign: 'center', 
+        p: 3 
+      }}
+    >
+      <Typography 
+        variant="h1" 
+        gutterBottom
+      >
+        Welcome Back, {user?.name || 'Guest'}!
+      </Typography>
+
+      <Card 
+        sx={{ 
+          maxWidth: 400, 
+          margin: '20px auto', 
+          borderRadius: '50%', 
+          overflow: 'hidden' 
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={randomImageUrl}
+          alt="Random image from Picsum"
+        />
+      </Card>
+
       <Typography 
         variant="h3" 
-        gutterBottom 
-        sx={{ fontWeight: 'bold', color: theme.palette.primary.main }}
-      >
-        Welcome Back, {user?.name}!
-      </Typography>
-      <Typography 
-        variant="h6" 
-        gutterBottom 
-        sx={{ color: theme.palette.text.secondary }}
+        gutterBottom
       >
         Start managing your saved links below.
       </Typography>
+
+      <Button 
+        variant="contained" 
+        onClick={() => window.location.href = '/dashboard'}
+      >
+        Go to Dashboard
+      </Button>
     </Box>
   );
 };

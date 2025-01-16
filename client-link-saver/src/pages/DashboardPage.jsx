@@ -31,43 +31,24 @@ const DashboardPage = () => {
     loadLinks();
   }, [isAuthenticated, getAccessTokenSilently]);
 
-  const handleAddLink = async () => {
-    if (!linkData.title || !linkData.url) return setError('Please provide a title and a URL');
-    
-    setIsSubmitting(true);
+  const handleLinkAction = async (action, linkId = null, data = null) => {
+    setLoading(true);
     try {
       const token = await getAccessTokenSilently();
-      const newLink = await addLink(token, linkData);
-      setLinks((prev) => [...prev, newLink]);
+      let result;
+      if (action === 'add') result = await addLink(token, data);
+      if (action === 'delete') await deleteLink(token, linkId);
+      if (action === 'update') result = await updateLink(token, linkId, data);
+      
+      setLinks((prev) => {
+        if (action === 'add') return [...prev, result];
+        if (action === 'delete') return prev.filter((link) => link.id !== linkId);
+        if (action === 'update') return prev.map((link) => (link.id === linkId ? result : link));
+        return prev;
+      });
       setLinkData({ title: '', url: '' });
     } catch {
-      setError('Failed to add link');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleDeleteLink = async (linkId) => {
-    setLoading(true);
-    try {
-      const token = await getAccessTokenSilently();
-      await deleteLink(token, linkId);
-      setLinks((prev) => prev.filter((link) => link.id !== linkId));
-    } catch {
-      setError('Failed to delete link');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleUpdateLink = async (linkId, updatedData) => {
-    setLoading(true);
-    try {
-      const token = await getAccessTokenSilently();
-      const updatedLink = await updateLink(token, linkId, updatedData);
-      setLinks((prev) => prev.map((link) => (link.id === linkId ? updatedLink : link)));
-    } catch {
-      setError('Failed to update link');
+      setError(`Failed to ${action} link`);
     } finally {
       setLoading(false);
     }
@@ -76,14 +57,12 @@ const DashboardPage = () => {
   return (
     <Container>
       <Box mt={5}>
-        <Typography variant="h6" gutterBottom>Welcome, {user?.name || 'User'}</Typography>
-        <Typography variant="body1" gutterBottom>Manage your saved links below.</Typography>
+        <Typography variant="h1" sx={{ textAlign: 'center' }} gutterBottom>Welcome, {user?.name || 'User'}</Typography>
+        <Typography variant="h3" sx={{ textAlign: 'center' }} gutterBottom>Manage your saved links below.</Typography>
 
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error}</Alert>}
-        {!loading && !error && (
-          <LinksList links={links} onDelete={handleDeleteLink} onUpdate={handleUpdateLink} />
-        )}
+        {!loading && !error && <LinksList links={links} onDelete={(id) => handleLinkAction('delete', id)} onUpdate={handleLinkAction} />}
 
         <Box mt={3}>
           <Stack spacing={2}>
@@ -105,7 +84,7 @@ const DashboardPage = () => {
             />
             <Button
               variant="contained"
-              onClick={handleAddLink}
+              onClick={() => handleLinkAction('add', null, linkData)}
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Adding...' : 'Add New Link'}
