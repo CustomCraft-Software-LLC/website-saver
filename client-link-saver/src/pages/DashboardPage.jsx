@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Typography, Container, Box, Button, CircularProgress, Alert, TextField } from '@mui/material';
+import { Typography, Container, Box, Button, CircularProgress, Alert, TextField, Stack } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
 import { fetchLinks, addLink, updateLink, deleteLink } from '../services/linksService';
 import LinksList from '../components/LinksList';
@@ -13,38 +13,34 @@ const DashboardPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      const loadLinks = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-          const token = await getAccessTokenSilently();
-          const fetchedLinks = await fetchLinks(token);
-          setLinks(fetchedLinks);
-        } catch (error) {
-          setError('Failed to load links');
-        } finally {
-          setLoading(false);
-        }
-      };
+    if (!isAuthenticated) return;
 
-      loadLinks();
-    }
+    const loadLinks = async () => {
+      setLoading(true);
+      try {
+        const token = await getAccessTokenSilently();
+        const fetchedLinks = await fetchLinks(token);
+        setLinks(fetchedLinks);
+      } catch {
+        setError('Failed to load links');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadLinks();
   }, [isAuthenticated, getAccessTokenSilently]);
 
   const handleAddLink = async () => {
-    if (!linkData.title || !linkData.url) {
-      setError('Please provide a title and a URL');
-      return;
-    }
-
+    if (!linkData.title || !linkData.url) return setError('Please provide a title and a URL');
+    
     setIsSubmitting(true);
     try {
       const token = await getAccessTokenSilently();
       const newLink = await addLink(token, linkData);
-      setLinks((prevLinks) => [...prevLinks, newLink]);
+      setLinks((prev) => [...prev, newLink]);
       setLinkData({ title: '', url: '' });
-    } catch (error) {
+    } catch {
       setError('Failed to add link');
     } finally {
       setIsSubmitting(false);
@@ -56,8 +52,8 @@ const DashboardPage = () => {
     try {
       const token = await getAccessTokenSilently();
       await deleteLink(token, linkId);
-      setLinks((prevLinks) => prevLinks.filter((link) => link.id !== linkId));
-    } catch (error) {
+      setLinks((prev) => prev.filter((link) => link.id !== linkId));
+    } catch {
       setError('Failed to delete link');
     } finally {
       setLoading(false);
@@ -69,79 +65,52 @@ const DashboardPage = () => {
     try {
       const token = await getAccessTokenSilently();
       const updatedLink = await updateLink(token, linkId, updatedData);
-      setLinks((prevLinks) =>
-        prevLinks.map((link) => (link.id === linkId ? updatedLink : link))
-      );
-    } catch (error) {
+      setLinks((prev) => prev.map((link) => (link.id === linkId ? updatedLink : link)));
+    } catch {
       setError('Failed to update link');
     } finally {
       setLoading(false);
     }
   };
 
-  const renderLoading = () => (
-    <Box mt={3} textAlign="center">
-      <CircularProgress />
-      <Typography variant="body2" mt={2}>
-        Loading your links...
-      </Typography>
-    </Box>
-  );
-
-  const renderError = () => (
-    <Box mt={3}>
-      <Alert severity="error">{error}</Alert>
-    </Box>
-  );
-
   return (
-    <Container maxWidth="md">
+    <Container>
       <Box mt={5}>
-        <Typography variant="h4" gutterBottom>
-          Welcome, {user?.email || 'User'}
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          Manage your saved links below.
-        </Typography>
+        <Typography variant="h6" gutterBottom>Welcome, {user?.email || 'User'}</Typography>
+        <Typography variant="body1" gutterBottom>Manage your saved links below.</Typography>
 
-        {loading && renderLoading()}
-        {error && renderError()}
-
+        {loading && <CircularProgress />}
+        {error && <Alert severity="error">{error}</Alert>}
         {!loading && !error && (
-          <LinksList
-            links={links}
-            onDelete={handleDeleteLink}
-            onUpdate={handleUpdateLink}
-          />
+          <LinksList links={links} onDelete={handleDeleteLink} onUpdate={handleUpdateLink} />
         )}
 
         <Box mt={3}>
-          <TextField
-            label="Title"
-            variant="outlined"
-            fullWidth
-            value={linkData.title}
-            onChange={(e) => setLinkData({ ...linkData, title: e.target.value })}
-            margin="normal"
-          />
-          <TextField
-            label="URL"
-            variant="outlined"
-            fullWidth
-            value={linkData.url}
-            onChange={(e) => setLinkData({ ...linkData, url: e.target.value })}
-            margin="normal"
-          />
-          <Box mt={2}>
+          <Stack spacing={2}>
+            <TextField
+              label="Title"
+              variant="outlined"
+              fullWidth
+              value={linkData.title}
+              onChange={(e) => setLinkData({ ...linkData, title: e.target.value })}
+              margin="normal"
+            />
+            <TextField
+              label="URL"
+              variant="outlined"
+              fullWidth
+              value={linkData.url}
+              onChange={(e) => setLinkData({ ...linkData, url: e.target.value })}
+              margin="normal"
+            />
             <Button
               variant="contained"
-              color="primary"
               onClick={handleAddLink}
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Adding...' : 'Add New Link'}
             </Button>
-          </Box>
+          </Stack>
         </Box>
       </Box>
     </Container>

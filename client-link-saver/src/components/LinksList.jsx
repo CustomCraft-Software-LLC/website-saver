@@ -1,44 +1,61 @@
-import { Box, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Typography, TextField, Stack } from '@mui/material';
 
 const LinksList = ({ links, onDelete, onUpdate }) => {
-  const handleDelete = (linkId) => {
-    onDelete(linkId);
-  };
-
-  const handleUpdate = (linkId, updatedData) => {
-    onUpdate(linkId, updatedData);
-  };
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({ title: '', url: '' });
 
   return (
-    <Box mt={3}>
-      {links.length > 0 ? (
+    <Box>
+      {links.length ? (
         links.map((link) => (
-          <Box key={link.id} mb={2} display="flex" justifyContent="space-between" alignItems="center">
-            <Box>
-              <Typography variant="h6">{link.title}</Typography>
-              <Typography variant="body2" color="textSecondary">
-                {link.url}
-              </Typography>
-            </Box>
-            <Box>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => handleUpdate(link.id, { title: 'Updated Title', url: 'https://new-url.com' })}
-                style={{ marginRight: '8px' }}
-              >
-                Edit
-              </Button>
-              <Button variant="contained" color="secondary" onClick={() => handleDelete(link.id)}>
-                Delete
-              </Button>
-            </Box>
+          <Box key={link.id} mb={2}>
+            <Stack
+              sx={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 2,
+              }}
+            >
+              {editingId === link.id ? (
+                <React.Fragment>
+                  <TextField
+                    value={editData.title}
+                    onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                    placeholder="Title"
+                    sx={{ flex: 1 }}
+                  />
+                  <TextField
+                    value={editData.url}
+                    onChange={(e) => setEditData({ ...editData, url: e.target.value })}
+                    placeholder="URL"
+                    sx={{ flex: 1 }}
+                  />
+                  <Button onClick={() => { onUpdate(link.id, editData); setEditingId(null); }} sx={{ marginRight: 1 }}>
+                    Save
+                  </Button>
+                  <Button onClick={() => setEditingId(null)} sx={{ marginRight: 1 }}>
+                    Cancel
+                  </Button>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <Typography sx={{ flex: 1 }}>
+                    {link.title} - {link.url}
+                  </Typography>
+                  <Button onClick={() => { setEditingId(link.id); setEditData(link); }} sx={{ marginRight: 1 }}>
+                    Edit
+                  </Button>
+                  <Button onClick={() => onDelete(link.id)} sx={{ marginLeft: 1 }}>
+                    Delete
+                  </Button>
+                </React.Fragment>
+              )}
+            </Stack>
           </Box>
         ))
       ) : (
-        <Typography variant="body1" color="textSecondary">
-          No links found.
-        </Typography>
+        <Typography>No links found.</Typography>
       )}
     </Box>
   );
