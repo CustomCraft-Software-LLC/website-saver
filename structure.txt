@@ -1,0 +1,64 @@
+.
+├── client-link-saver
+│   ├── dist
+│   │   ├── assets
+│   │   │   └── index-C9KQqcdL.js
+│   │   └── index.html
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   ├── README.md
+│   ├── src
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   │   └── theme.js
+│   │   ├── components
+│   │   │   ├── HomeLoggedIn.jsx
+│   │   │   ├── HomeLoggedOut.jsx
+│   │   │   ├── LinksList.jsx
+│   │   │   ├── LoginButton.jsx
+│   │   │   ├── LogoutButton.jsx
+│   │   │   └── Navbar.jsx
+│   │   ├── contexts
+│   │   │   └── Auth0.jsx
+│   │   ├── hooks
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── pages
+│   │   │   ├── DashboardPage.jsx
+│   │   │   └── HomePage.jsx
+│   │   └── services
+│   │       └── linksService.js
+│   ├── structure.txt
+│   └── vite.config.js
+├── README.md
+├── server-link-saver
+│   ├── config
+│   │   └── config.json
+│   ├── controllers
+│   │   ├── linkController.js
+│   │   └── linkControllerList.js
+│   ├── index.js
+│   ├── middleware
+│   │   └── authMiddleware.js
+│   ├── migrations
+│   │   └── 20250104215046-create-links.js
+│   ├── models
+│   │   ├── index.js
+│   │   └── Link.js
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── README.md
+│   ├── routes
+│   │   └── index.js
+│   ├── seeders
+│   ├── structure.txt
+│   ├── tests
+│   │   └── LinkTest.js
+│   └── utils
+│       └── validateData.js
+└── structure.txt
+
+21 directories, 40 files
