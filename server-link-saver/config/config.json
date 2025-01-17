@@ -11,7 +11,13 @@
   },
   "test": {
     "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "production": {
     "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://website-saver.onrender.com/api/links';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const fetchLinks = async (token) => {
   const response = await axios.get(`${API_BASE_URL}`, {

@@ -1,7 +1,7 @@
 .
 ├── dist
 │   ├── assets
-│   │   └── index-E7lCRYMF.js
+│   │   └── index-C9KQqcdL.js
 │   └── index.html
 ├── eslint.config.js
 ├── index.html
@@ -14,25 +14,23 @@
 │   ├── assets
 │   │   └── theme.js
 │   ├── components
-│   │   ├── AddLinkDialog.jsx
 │   │   ├── HomeLoggedIn.jsx
 │   │   ├── HomeLoggedOut.jsx
 │   │   ├── LinksList.jsx
 │   │   ├── LoginButton.jsx
 │   │   ├── LogoutButton.jsx
-│   │   ├── Navbar.jsx
-│   │   └── Seo.jsx
+│   │   └── Navbar.jsx
 │   ├── contexts
 │   │   └── Auth0.jsx
 │   ├── hooks
-│   │   ├── useDialogState.jsx
-│   │   └── useLinks.jsx
 │   ├── index.css
 │   ├── main.jsx
-│   └── pages
-│       ├── DashboardPage.jsx
-│       └── HomePage.jsx
+│   ├── pages
+│   │   ├── DashboardPage.jsx
+│   │   └── HomePage.jsx
+│   └── services
+│       └── linksService.js
 ├── structure.txt
 └── vite.config.js
 
-9 directories, 26 files
+10 directories, 23 files
