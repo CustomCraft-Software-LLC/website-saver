@@ -87,7 +87,7 @@ const DashboardPage = () => {
               onClick={() => handleLinkAction('add', null, linkData)}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Adding...' : 'Add New Link'}
+              {isSubmitting ? 'Adding...' : 'Add'}
             </Button>
           </Stack>
         </Box>

@@ -21,3 +21,12 @@ DATABASE_URL=
 ### Link client hosted upon
 
 CLIENT_URL=
+
+## sequelize
+
+Proper after db setup
+
+```bash
+npm install --save-dev sequelize-cli
+npx sequelize-cli db:migrate
+```
