@@ -15,7 +15,7 @@ const LinksList = ({ links, onDelete, onUpdate }) => {
             <Grid container alignItems="center" spacing={2}>
               {editingId === link.id ? (
                 <React.Fragment>
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       value={editData.title}
                       onChange={(e) => setEditData({ ...editData, title: e.target.value })}
@@ -23,7 +23,7 @@ const LinksList = ({ links, onDelete, onUpdate }) => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       value={editData.url}
                       onChange={(e) => setEditData({ ...editData, url: e.target.value })}

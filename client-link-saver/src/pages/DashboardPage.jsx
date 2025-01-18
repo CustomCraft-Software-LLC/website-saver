@@ -37,7 +37,7 @@ const DashboardPage = () => {
       const token = await getAccessTokenSilently();
       let result;
       if (action === 'add') result = await addLink(token, data);
-      if (action === 'delete') await deleteLink(token, linkId);
+      if (action === 'delete') result = await deleteLink(token, linkId);
       if (action === 'update') result = await updateLink(token, linkId, data);
       
       setLinks((prev) => {
