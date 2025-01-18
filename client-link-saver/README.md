@@ -74,3 +74,15 @@ Replace the default code with the following HTML:
   </body>
 </html>
 ```
+
+## env
+
+### Auth0
+
+VITE_AUTH0_DOMAIN=
+VITE_AUTH0_CLIENT_ID=
+VITE_AUTH0_AUDIENCE=
+
+### Render hosted server or where the server
+
+VITE_BACKEND_URL=

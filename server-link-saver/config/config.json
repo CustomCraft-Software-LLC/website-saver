@@ -1,6 +1,6 @@
 {
   "development": {
-    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
+    "url": "ADD_EXTERNAL_URL",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -10,7 +10,7 @@
     }
   },
   "test": {
-    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
+    "url": "ADD_EXTERNAL_URL",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -20,7 +20,7 @@
     }
   },
   "production": {
-    "url": "postgresql://user:nmgZElvruB8h2Pbt6Ihz9pQWo8TR773U@dpg-ctsntflds78s73chcvkg-a.oregon-postgres.render.com/linksaverdb_vjvf",
+    "url": "ADD_EXTERNAL_URL",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -30,3 +30,4 @@
     }
   }
 }
+

@@ -1,31 +1,23 @@
-valid data
+# server-link-saver
 
-{
-    "user": "",
-    "links": [
-        {
-            "id": ""
-            "name": " ",
-            "website": ""
-        },
-        {
-            
-        }
-    ]
-}
+## config.json
 
+Add external url to config.json
 
+"url": "ADD_EXTERNAL_URL"
 
-Decoded JWT: {
-  payload: {
-    iss: 'https://',
-    sub: 'google-oauth2|123456789123456789124',
-    aud: [
-      'https://website-saver.onrender.com',
-      'https://dev'
-    ],
-    iat: ,
-    exp: ,
-    scope: 'openid profile email',
-    azp: ''
-  }
+## .env
+
+### Auth0
+
+AUTH0_DOMAIN=
+AUTH0_SECRET=
+AUTH0_AUDIENCE=
+
+### Render
+
+DATABASE_URL=
+
+### Link client hosted upon
+
+CLIENT_URL=
